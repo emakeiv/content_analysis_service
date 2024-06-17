@@ -1,0 +1,11 @@
+Exploratory Data Analysis Memo
+
+Descriptive Statistics:
+Calculate summary statistics for numerical columns  duration, year, etc.).
+Count and percentage distribution of categorical columns (e.g., content_type, genre, country).
+Identify the proportion of missing values in each column.
+
+Visualization:
+Bar charts for categorical distributions (e.g., content_type, genre).
+Histograms for numerical distributions (e.g., duration, year).
+Heatmap for missing values.

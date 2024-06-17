@@ -1,6 +1,6 @@
 
 from src.etl.runner import ETL
-from src.sal.s3.data_service import S3DataService
+from src.sal.data.s3.data_service import S3DataService
 from configure import settings
 
 primary_config = {
@@ -27,6 +27,8 @@ def run():
     else:
         print(f"data successfully extracted")
         print(data.head())
+        print(data.columns)
+        print(data.info())
 
     # process.transform()
     # process.load()
