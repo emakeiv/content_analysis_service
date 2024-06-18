@@ -9,3 +9,6 @@ Visualization:
 Bar charts for categorical distributions (e.g., content_type, genre).
 Histograms for numerical distributions (e.g., duration, year).
 Heatmap for missing values.
+Top genres (histogram)
+Rating distribution (OCHL)
+Countries of origin (map - heatmap)
