@@ -13,14 +13,11 @@ This project aims to analyze and improve TV content data by performing various d
 
 2. **Build Docker Image**:
    ```bash
-   docker build -t content_analysis_service .
+   docker build -t cas_app .
 
 2. **Run service container**:
   ```bash
-  docker run -p 8000:8000 content_analysis_service
+  docker run -p 80:80 cas+_app
 
 
-## API Endpoints
- - <b>GET</b> /stats: Fetch descriptive statistics.
- - <b>POST</b> /clean: Trigger data cleaning and processing.
- - <b>GET</> /keywords: Generate and fetch topics/keywords.
+

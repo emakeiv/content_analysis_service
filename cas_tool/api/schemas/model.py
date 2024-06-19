@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class Show(BaseModel):
+class TvShow(BaseModel):
     name: str
     season: int
     episode: int
