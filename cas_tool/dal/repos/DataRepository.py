@@ -1,8 +1,9 @@
 from dal.repos.IRepository import IRepository
 import dal.model as model
 
+
 class DataRepository(IRepository):
-    
+
     def __init__(self, session):
         self.session = session
 
@@ -14,7 +15,7 @@ class DataRepository(IRepository):
 
     def list(self):
         return self.session.query(model.TvShow).all()
-    
+
     def update(self, entity_id: int, entity):
         pass
 

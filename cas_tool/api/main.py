@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from endpoints import records, statistics
+from api.endpoints import records, statistics
+
 
 def create_server():
     server = FastAPI(debug=True)

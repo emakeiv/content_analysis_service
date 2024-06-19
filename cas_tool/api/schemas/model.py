@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class Show(BaseModel):
     name: str
     season: int
@@ -27,5 +28,5 @@ class Show(BaseModel):
             "content_type": self.content_type,
             "genre": self.genre,
             "year": self.year,
-            "description": self.description
+            "description": self.description,
         }

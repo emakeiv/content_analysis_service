@@ -9,7 +9,7 @@ tv_show_table = Table(
     "tv_show",
     mapper_registry.metadata,
     Column("id", Integer, primary_key=True),
-    Column("asset_id", Integer, ForeignKey("asset.id"))
+    Column("asset_id", Integer, ForeignKey("asset.id")),
     Column("name", String),
     Column("year", Integer),
     Column("season", Integer),
@@ -21,7 +21,7 @@ tv_show_table = Table(
     Column("country", String),
     Column("content_type", String),
     Column("genre", String),
-    Column("description", String)
+    Column("description", String),
 )
 
 

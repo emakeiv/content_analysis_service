@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 class ETL:
     def __init__(self, service):
         print(type(service))
@@ -39,24 +40,27 @@ class ETL:
         }
         """
 
-        df.fillna({
-            'duration': 0,
-            'name': '',
-            'season': 0,
-            'episode': 0,
-            'description': '',
-            'year:': 0,
-            'actors': '',
-            'director': '',
-            'country': 'unknown',
-            'content_type': 'unknown', 
-            'imdbid': 'unknown',
-            'genre': 'unknown'
-        }, inplace=True)
+        df.fillna(
+            {
+                "duration": 0,
+                "name": "",
+                "season": 0,
+                "episode": 0,
+                "description": "",
+                "year:": 0,
+                "actors": "",
+                "director": "",
+                "country": "unknown",
+                "content_type": "unknown",
+                "imdbid": "unknown",
+                "genre": "unknown",
+            },
+            inplace=True,
+        )
 
     def load(self):
         """
-            TODO:
-                - write data to a database.
+        TODO:
+            - write data to a database.
         """
         pass

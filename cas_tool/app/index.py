@@ -5,8 +5,6 @@ from dash import html
 from dash.dependencies import Input, Output, State
 
 
-
-
 cards = [
     dbc.Card(
         [
@@ -14,7 +12,7 @@ cards = [
             html.P("Total duration", className="card-text"),
         ],
         body=True,
-        color="light"
+        color="light",
     ),
     dbc.Card(
         [
@@ -23,7 +21,7 @@ cards = [
         ],
         body=True,
         color="success",
-        inverse=True
+        inverse=True,
     ),
     dbc.Card(
         [
@@ -32,7 +30,7 @@ cards = [
         ],
         body=True,
         color="dark",
-        inverse=True
+        inverse=True,
     ),
     dbc.Card(
         [
@@ -41,18 +39,13 @@ cards = [
         ],
         body=True,
         color="primary",
-        inverse=True
-    )
+        inverse=True,
+    ),
 ]
 
-app = dash.Dash(
-    __name__, 
-    external_stylesheets=[dbc.themes.BOOTSTRAP]
-)
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = dbc.Container(
-    dbc.Row([dbc.Col(card, width=3) for card in cards]),
-    fluid=True,
-    id="page-content"
+    dbc.Row([dbc.Col(card, width=3) for card in cards]), fluid=True, id="page-content"
 )
 
 if __name__ == "__main__":

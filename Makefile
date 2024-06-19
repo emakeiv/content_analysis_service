@@ -2,7 +2,7 @@ install:
 	pip install --upgrade pip  &&\
 		pip install -r requirements.txt 
 format:
-	#black
+	black -l 86 $$(find * -name '*.py')
 lint:
 	# pylint
 test:
