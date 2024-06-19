@@ -14,7 +14,7 @@ class Show(BaseModel):
     year: int
     description: str
 
-    def to_dict(self):
+    def dict(self):
         return {
             "name": self.name,
             "season": self.season,

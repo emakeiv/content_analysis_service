@@ -45,10 +45,11 @@ class ETL:
             'season': 0,
             'episode': 0,
             'description': '',
-            'year:': '',
+            'year:': 0,
             'actors': '',
             'director': '',
             'country': 'unknown',
+            'content_type': 'unknown', 
             'imdbid': 'unknown',
             'genre': 'unknown'
         }, inplace=True)
