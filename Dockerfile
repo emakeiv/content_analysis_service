@@ -12,4 +12,4 @@ COPY cas_tool/ ./cas_tool/
 ENV PYTHONPATH "${PYTHONPATH}:/app/cas_tool/"
 ENV PYTHONUNBUFFERED=1
 
-CMD fastapi dev cas_tool/api/main.py --reload
+CMD ["uvicorn", "cas_tool.api.main:app", "--host", "0.0.0.0", "--port", "80"]
