@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 class TvShow(BaseModel):
     name: str
     season: int

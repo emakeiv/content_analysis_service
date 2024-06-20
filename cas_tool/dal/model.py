@@ -5,7 +5,7 @@ from datetime import datetime
 @dataclass
 class TvShow:
     name: str
-    year: datetime.date.year
+    year: int
     season: int
     episode: int
     duration: float

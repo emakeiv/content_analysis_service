@@ -1,12 +1,12 @@
-
 from abc import ABC, abstractmethod
 from dal.adapters import repository
 from db import factory
 
-class AbstractUnitOfWork(ABC):
-    repos: repository.IRepository
 
-    def __enter__(self) -> AbstractUnitOfWork:
+class AbstractUnitOfWork(ABC):
+    repos: repository.RecordsRepository
+
+    def __enter__(self):
         return self
 
     def __exit__(self, *args):
@@ -20,8 +20,9 @@ class AbstractUnitOfWork(ABC):
     def rollback(self):
         raise NotImplementedError
 
+
 class SqlUnitOfWork(AbstractUnitOfWork):
-    def __init__(self, session_factory=DEFAULT_SESSION_FACTORY):
+    def __init__(self, session_factory=factory.DEFAULT_SESSION_FACTORY):
         self.session_factory = session_factory
 
     def __enter__(self):

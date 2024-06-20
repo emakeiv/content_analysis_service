@@ -15,9 +15,12 @@ This project aims to analyze and improve TV content data by performing various d
    ```bash
    docker build -t cas_app .
 
-2. **Run service container**:
-  ```bash
-  docker run -p 80:80 cas+_app
+3. **Run service container**:
+   ```bash
+   docker run -p 80:80 cas_app
+
+## API endpoints
+
 
 
 

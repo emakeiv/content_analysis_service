@@ -1,22 +1,20 @@
 from dal.model import TvShow as Record
-from dal.repos.IRepository import IRepository
-from sqlalchemy.exc import DatabaseError
+from dal.adapters.repository import AbstracRepository
+from sal.ops.uows import AbstractUnitOfWork
+
 
 class InvalidRecord(Exception):
     pass
 
-def store_record(record: Record, repo: IRepository, session) -> str:
+
+def store_record(record: Record, uow: AbstractUnitOfWork):
     try:
-        if not record.name or len(record.name) < 5:
-            raise InvalidRecord("")
-        with session.begin():
-            repo.add(record)
-
-        return f"record: {record.id} -- stored into db."
-
+        with uow:
+            uow.repos.add(record)
+            uow.commit()
     except InvalidRecord as e:
         return str(e)
 
-    except Exception as e:   
-        session.rollback()
+    except Exception as e:
+        uow.rollback()
         return f"Unexpected error: {str(e)}"

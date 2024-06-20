@@ -3,7 +3,7 @@ import dal.model as model
 from abc import ABC, abstractmethod
 
 
-class IRepository(ABC):
+class AbstracRepository(ABC):
 
     @abstractmethod
     def add(self, entity):
@@ -26,7 +26,7 @@ class IRepository(ABC):
         raise NotImplementedError
 
 
-class RecordsRepository(IRepository):
+class RecordsRepository(AbstracRepository):
 
     def __init__(self, session):
         self.session = session

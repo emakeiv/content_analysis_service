@@ -1,7 +1,8 @@
 import dash
-import dash_bootstrap_components as dbc
 from dash import dcc
 from dash import html
+import plotly.express as px
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 
 
@@ -45,8 +46,18 @@ cards = [
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = dbc.Container(
-    dbc.Row([dbc.Col(card, width=3) for card in cards]), fluid=True, id="page-content"
+    dbc.Row([dbc.Col(card, width=3) for card in cards]),
+    dbc.Row(dcc.Graph(id="graph")),
+    fluid=True,
+    id="page-content",
 )
+
+
+@app.callback(Output("graph", "figure"))
+def rotate_figure():
+    fig = px.histogram(df, x="sex", height=500)
+    return fig
+
 
 if __name__ == "__main__":
     app.run_server(debug=True)
