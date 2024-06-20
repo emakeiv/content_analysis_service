@@ -33,11 +33,12 @@ class RecordsRepository(AbstracRepository):
 
     def add(self, record):
         self.session.add(record)
-
+        
     def get(self, reference):
         return self.session.query(model.TvShow).filter_by(reference=reference).one()
 
     def list(self):
+        
         return self.session.query(model.TvShow).all()
 
     def bulk_insert(self, records: List[dict]):

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from api.endpoints import records, statistics
-
+from dal.orm.mapper import start_mappers
 
 def create_server():
     server = FastAPI(debug=True)
@@ -9,4 +9,5 @@ def create_server():
     return server
 
 
+start_mappers()
 app = create_server()

@@ -7,12 +7,16 @@ from fastapi import APIRouter, HTTPException
 router = APIRouter()
 
 
-@router.get("/records/", response_model=List[TvShow])
+@router.get("/records/")
 async def get_records():
-    return {"message": "I will return all records"}
+    try:
+        records = services.get_records(uows.SqlUnitOfWork())
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    return records
 
 
-@router.get("/record/{record_id}", response_model=TvShow)
+@router.get("/record/{record_id}")
 async def get_record(record_id: int):
     return {"message": f"I will return record {record_id}"}
 

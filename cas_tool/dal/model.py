@@ -1,9 +1,8 @@
 from dataclasses import dataclass
-from datetime import datetime
-
 
 @dataclass
 class TvShow:
+    asset_id: int
     name: str
     year: int
     season: int
@@ -16,3 +15,20 @@ class TvShow:
     content_type: str
     genre: str
     description: str
+
+    def dict(self):
+        return{
+            "asset_id": self.asset_id,
+            "name": self.name,
+            "year": self.year,
+            "season": self.season,
+            "episode": self.episode,
+            "duration": self.duration,
+            "imdbid": self.imdbid,
+            "actors": self.actors,
+            "director": self.director,
+            "country": self.country,
+            "content_type": self.content_type,
+            "genre": self.genre,
+            "description": self.description
+        }

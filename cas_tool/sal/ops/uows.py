@@ -35,6 +35,7 @@ class SqlUnitOfWork(AbstractUnitOfWork):
         self.session.close()
 
     def commit(self):
+        print(self.session)
         self.session.commit()
 
     def rollback(self):

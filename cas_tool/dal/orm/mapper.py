@@ -4,11 +4,12 @@ from dal.model import TvShow
 
 
 mapper_registry = registry()
+metadata = mapper_registry.metadata
 
-tv_show_table = Table(
-    "tv_show",
-    mapper_registry.metadata,
-    Column("id", Integer, primary_key=True),
+tv_show_records = Table(
+    "tv_show_records",
+    metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
     Column("asset_id", Integer, ForeignKey("asset.id")),
     Column("name", String),
     Column("year", Integer),
@@ -24,5 +25,5 @@ tv_show_table = Table(
     Column("description", String),
 )
 
-
-mapper_registry.map_imperatively(TvShow, tv_show_table)
+def start_mappers():
+    mapper_registry.map_imperatively(TvShow, tv_show_records)
