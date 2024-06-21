@@ -32,14 +32,25 @@ class RecordsRepository(AbstracRepository):
         self.session = session
 
     def add(self, record):
+        print(f'record:{record}')
         self.session.add(record)
         
     def get(self, reference):
         return self.session.query(model.TvShow).filter_by(reference=reference).one()
-
-    def list(self):
+    
+    def list(self, offset: int = None, limit: int = None, **query_conditions):
+        query = self.session.query(model.TvShow).all()
         
-        return self.session.query(model.TvShow).all()
+        for key, value in query_conditions.items():
+            query = query.filter(getattr(model.TvShow, key) == value)
+
+        if offset is not None:
+            query = query.offset(offset)
+        if limit is not None:
+            query = query.limit(limit)
+
+        return [entity.dict() for entity in query]
+    
 
     def bulk_insert(self, records: List[dict]):
         self.session.bulk_insert_mappings(self.entity, records)

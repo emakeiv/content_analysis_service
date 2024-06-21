@@ -11,6 +11,7 @@ router = APIRouter()
 async def get_records():
     try:
         records = services.get_records(uows.SqlUnitOfWork())
+        
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     return records

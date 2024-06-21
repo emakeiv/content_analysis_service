@@ -20,11 +20,8 @@ def save_record(record: Record, uow: AbstractUnitOfWork):
 def get_records(uow: AbstractUnitOfWork):
     try:
         with uow:
-           
-            items = uow.repos.list()
-
-
-            return items
+            return uow.repos.list()
+       
     except Exception as e:
             uow.rollback()
             return f"unexpected error: {str(e)}"

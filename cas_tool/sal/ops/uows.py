@@ -4,7 +4,6 @@ from db import factory
 
 
 class AbstractUnitOfWork(ABC):
-    repos: repository.RecordsRepository
 
     def __enter__(self):
         return self
