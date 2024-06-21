@@ -2,13 +2,10 @@ from dal.model import TvShow as Record
 from dal.adapters.repository import AbstracRepository
 from sal.ops.uows import AbstractUnitOfWork
 
-import logging
-
 class InvalidRecord(Exception):
     pass
 
-
-def store_record(record: Record, uow: AbstractUnitOfWork):
+def save_record(record: Record, uow: AbstractUnitOfWork):
     try:
         with uow:
             uow.repos.add(record)
@@ -18,7 +15,7 @@ def store_record(record: Record, uow: AbstractUnitOfWork):
 
     except Exception as e:
         uow.rollback()
-        return f"Unexpected error: {str(e)}"
+        return f"unexpected error: {str(e)}"
 
 def get_records(uow: AbstractUnitOfWork):
     try:
@@ -30,4 +27,4 @@ def get_records(uow: AbstractUnitOfWork):
             return items
     except Exception as e:
             uow.rollback()
-            return f"Unexpected error: {str(e)}"
+            return f"unexpected error: {str(e)}"

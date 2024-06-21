@@ -1,16 +1,19 @@
-from sqlalchemy import Table, Column, Integer, String, Float, ForeignKey
-from sqlalchemy.orm import registry
+
+
 from dal.model import TvShow
+from sqlalchemy.orm import registry
+from sqlalchemy.schema import MetaData
+from sqlalchemy import Table, Column, Integer, String, Float, ForeignKey
 
 
-mapper_registry = registry()
-metadata = mapper_registry.metadata
+metadata = MetaData()
+mapper_registry = registry(metadata=metadata)
 
-tv_show_records = Table(
+tv_show_table = Table(
     "tv_show_records",
-    metadata,
+    mapper_registry.metadata,
     Column("id", Integer, primary_key=True, autoincrement=True),
-    Column("asset_id", Integer, ForeignKey("asset.id")),
+    Column("asset_id", Integer),
     Column("name", String),
     Column("year", Integer),
     Column("season", Integer),
@@ -26,4 +29,4 @@ tv_show_records = Table(
 )
 
 def start_mappers():
-    mapper_registry.map_imperatively(TvShow, tv_show_records)
+    mapper_registry.map_imperatively(TvShow, tv_show_table)
