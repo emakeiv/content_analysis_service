@@ -1,31 +1,22 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import List
+from uuid import uuid4, UUID
 
-class TvShow(BaseModel):
+class TvShowRecordSchema(BaseModel):
+    id: UUID = Field(default_factory=uuid4)
+    asset_id: int
     name: str
+    year: int
     season: int
     episode: int
-    duration: int
+    duration: float
     imdbid: str
     actors: str
     director: str
     country: str
     content_type: str
     genre: str
-    year: int
     description: str
-
-    def dict(self):
-        return {
-            "name": self.name,
-            "season": self.season,
-            "episode": self.episode,
-            "duration": self.duration,
-            "imdbid": self.imdbid,
-            "actors": self.actors,
-            "director": self.director,
-            "country": self.country,
-            "content_type": self.content_type,
-            "genre": self.genre,
-            "year": self.year,
-            "description": self.description,
-        }
+    
+class TVShowRecordsListSchema(BaseModel):
+    records: List[TvShowRecordSchema]

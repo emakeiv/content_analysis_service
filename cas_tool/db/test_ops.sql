@@ -14,3 +14,7 @@ INSERT INTO TV_SHOW_RECORDS VALUES (
     , 'Comedy'
     , 'The misadventures of <NAME> and <NAME> in the world of high-stakes negotiations.'
 );
+
+PRAGMA table_info(TV_SHOW_RECORDS);
+
+DELETE FROM TV_SHOW_RECORDS;

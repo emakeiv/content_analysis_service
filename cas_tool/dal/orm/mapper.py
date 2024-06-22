@@ -3,7 +3,7 @@
 from dal.model import TvShow
 from sqlalchemy.orm import registry
 from sqlalchemy.schema import MetaData
-from sqlalchemy import Table, Column, Integer, String, Float, ForeignKey
+from sqlalchemy import Table, Column, Integer, String, Float, ForeignKey, Uuid
 
 
 metadata = MetaData()
@@ -12,7 +12,7 @@ mapper_registry = registry(metadata=metadata)
 tv_show_table = Table(
     "tv_show_records",
     mapper_registry.metadata,
-    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("id", Uuid, primary_key=True),
     Column("asset_id", Integer),
     Column("name", String),
     Column("year", Integer),

@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 @dataclass
 class TvShow:
+    id: str 
     asset_id: int
     name: str
     year: int
@@ -15,9 +16,10 @@ class TvShow:
     content_type: str
     genre: str
     description: str
-
+    
     def dict(self):
         return{
+            "id": self.id,
             "asset_id": self.asset_id,
             "name": self.name,
             "year": self.year,

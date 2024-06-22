@@ -32,9 +32,8 @@ class RecordsRepository(AbstracRepository):
         self.session = session
 
     def add(self, record):
-        print(f'record:{record}')
         self.session.add(record)
-        
+
     def get(self, reference):
         return self.session.query(model.TvShow).filter_by(reference=reference).one()
     
