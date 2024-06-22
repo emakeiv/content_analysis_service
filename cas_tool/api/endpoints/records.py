@@ -1,14 +1,14 @@
 from typing import List
+from uuid import uuid4, UUID
 from api.schemas.model import (
     TvShowRecordSchema,
     TVShowRecordsListSchema
 )
-from sal.ops import services, uows
+from sal.db_ops import services, uows
 from fastapi import APIRouter, HTTPException, status
 
 router = APIRouter()
 
-from uuid import uuid4, UUID
 @router.get("/records/", response_model=TVShowRecordsListSchema)
 async def get_records():
     try:

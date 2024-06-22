@@ -14,7 +14,7 @@ class S3DataService:
         )
         self.bucket_name = bucket_name
 
-    def read_csv(self, object_key: str) -> pd.DataFrame:
+    def read_file(self, object_key: str):
         try:
             object = self.client.get_object(Bucket=self.bucket_name, Key=object_key)
         except Exception as e:
@@ -27,5 +27,4 @@ class S3DataService:
             )
             content = object["Body"].read().decode("utf-8")
             data = StringIO(content)
-            df = pd.read_csv(data)
-            return df
+            return data

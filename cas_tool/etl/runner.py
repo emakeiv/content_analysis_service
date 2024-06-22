@@ -1,16 +1,21 @@
-import pandas as pd
 
 
 class ETL:
-    def __init__(self, service):
-        print(type(service))
-        self.data_service = service
+    def __init__(self, data_service, db_service, uow):
+    
+        self.data_service = data_service
+        self.db_service = db_service
+        self.uow = uow
 
-    def extract(self, data_target):
-        file = self.data_service.read_csv(data_target)
+    def extract(self, target):
+        file = self.data_service.reaf_file(target)
         return file
 
-    def transform(self, df: pd.DataFrame) -> pd.DataFrame:
+    def load(self, data):
+        save_to_db = self.db_service.save_many_records(data, self.uow)
+        
+
+    def transform(self, obj):
         """
         TODO:
             - apply some data imputation techniques
@@ -40,7 +45,7 @@ class ETL:
         }
         """
 
-        df.fillna(
+        obj.fillna(
             {
                 "duration": 0,
                 "name": "",
@@ -58,9 +63,5 @@ class ETL:
             inplace=True,
         )
 
-    def load(self):
-        """
-        TODO:
-            - write data to a database.
-        """
-        pass
+    
+        

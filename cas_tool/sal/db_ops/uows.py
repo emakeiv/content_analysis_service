@@ -20,7 +20,7 @@ class AbstractUnitOfWork(ABC):
         raise NotImplementedError
 
 
-class SqlUnitOfWork(AbstractUnitOfWork):
+class DatabaseUnitOfWork(AbstractUnitOfWork):
     def __init__(self, session_factory=factory.DEFAULT_SESSION_FACTORY):
         self.session_factory = session_factory
 

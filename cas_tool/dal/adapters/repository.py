@@ -52,7 +52,7 @@ class RecordsRepository(AbstracRepository):
     
 
     def bulk_insert(self, records: List[dict]):
-        self.session.bulk_insert_mappings(self.entity, records)
+        self.session.bulk_insert_mappings(records)
 
     def update(self, entity_id: int, entity):
         pass
