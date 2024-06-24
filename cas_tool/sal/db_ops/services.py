@@ -15,14 +15,28 @@ def save_record(entity, uow: AbstractUnitOfWork):
         return f"unexpected error: {str(e)}"
 
 def save_many_records(entities, uow: AbstractUnitOfWork):
+    records =[]
+    duplicates = set()
     try:
-        with uow:
-            records = [Record(**entity.dict()) for entity in entities]
-            uow.repos.bulk_insert(records)
-            uow.commit()
+        with uow():
+            for i, entity in entities.iterrows():
+                        record_id = (i, entity.asset_id)
+                        if record_id not in duplicates:
+                            entity["id"] = i
+                            record = Record(**entity)
+                            records.append(record.dict())
+                            duplicates.add(record_id)
+                            print(f"{i} record added wit id: {record.id}")
+                            #uow.repos.add(record)
+                            
+                            if i > 100:
+                                break
+            # if records :
+            #     uow.repos.bulk_insert(records)
+            #     uow.commit()
     except Exception as e:
-        uow.rollback()
-        return f"unexpected error: {str(e)}"
+         uow.rollback()
+         return f"unexpected error: {str(e)}"
 
 def get_records(uow: AbstractUnitOfWork):
     try:

@@ -1,36 +1,50 @@
-from src.etl.runner import ETL
-from src.sal.data.s3.data_service import S3DataService
+from etl.runner import ETL
+from sal.storage.s3.services import S3DataService
+from sal.storage.local.services import LocalStorageService
+from sal.db_ops import services as database_service
+from sal.db_ops import uows
 from configure import settings
 
-primary_config = {
+s3_config = {
     "access_key": settings.aws_access_key_id,
     "secret_key": settings.aws_secret_access_key,
     "bucket_name": settings.aws_s3_bucket,
 }
 
+local_config = {
+    
+    "source_path": "data/raw/",
+    "destination_path": "",
+}
 
 def run():
-    """
-    runs the ETL extract, transformm load  process using an S3 data service as primary data source.
-    This function extracts data from an S3 bucket, using the configuration settings
-    provided in the `primary_config` dictionary. It then prints the head of the extracted data.
-    """
 
-    data_service = S3DataService(**primary_config)
-    process = ETL(data_service)
+    data_service = S3DataService(**s3_config)
+    storage_service = LocalStorageService(**local_config)
+    uow = uows.DatabaseUnitOfWork()
+    process = ETL(
+        data_service, 
+        database_service, 
+        storage_service, 
+        uow
+    ) 
+
     try:
-        data = process.extract("tv_sample.csv")
+        d = process.extract("tv_sample.csv")
+        
+        process.transform(d)
+        if process.validate(d):
+            
+            process.load_many(d)
+            #process.load()
+        else:
+            print("validation failed")
+        #process.load()
     except Exception as e:
-        print(f"error occurred during data extract: {e}")
-    else:
-        print(f"data successfully extracted")
-        print(data.head())
-        print(data.columns)
-        print(data.info())
+        print(f"error occurred: {e}")
 
-    # process.transform()
-    # process.load()
-
+def aux_run():
+    pass
 
 if __name__ == "__main__":
     run()

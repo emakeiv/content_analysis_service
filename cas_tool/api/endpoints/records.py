@@ -12,7 +12,7 @@ router = APIRouter()
 @router.get("/records/", response_model=TVShowRecordsListSchema)
 async def get_records():
     try:
-        records = services.get_records(uows.SqlUnitOfWork())
+        records = services.get_records(uows.DatabaseUnitOfWork())
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     return {"records": records}
@@ -27,7 +27,7 @@ async def get_record(record_id: int):
 async def add_record(record: TvShowRecordSchema):
     try:
         record.id = uuid4()
-        record = services.save_record(record, uows.SqlUnitOfWork())
+        record = services.save_record(record, uows.DatabaseUnitOfWork())
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     return record

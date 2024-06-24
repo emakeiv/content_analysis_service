@@ -52,6 +52,7 @@ class RecordsRepository(AbstracRepository):
     
 
     def bulk_insert(self, records: List[dict]):
+        print('bulk insert method is called in records repository')
         self.session.bulk_insert_mappings(records)
 
     def update(self, entity_id: int, entity):
