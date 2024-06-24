@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class TvShow:
-    id: str 
+    id: str
     asset_id: int
     name: str
     year: int
@@ -16,9 +17,9 @@ class TvShow:
     content_type: str
     genre: str
     description: str
-      
+
     def dict(self):
-        return{
+        return {
             "id": self.id,
             "asset_id": self.asset_id,
             "name": self.name,
@@ -32,6 +33,5 @@ class TvShow:
             "country": self.country,
             "content_type": self.content_type,
             "genre": self.genre,
-            "description": self.description
+            "description": self.description,
         }
-

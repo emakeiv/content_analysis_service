@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List
 from uuid import uuid4, UUID
 
+
 class TvShowRecordSchema(BaseModel):
     id: UUID = Field(default_factory=uuid4)
     asset_id: int
@@ -17,6 +18,7 @@ class TvShowRecordSchema(BaseModel):
     content_type: str
     genre: str
     description: str
-    
+
+
 class TVShowRecordsListSchema(BaseModel):
     records: List[TvShowRecordSchema]

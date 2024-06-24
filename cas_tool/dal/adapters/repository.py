@@ -32,14 +32,20 @@ class RecordsRepository(AbstracRepository):
         self.session = session
 
     def add(self, record):
-        self.session.add(record)
+        try:
+            print("add method is called in records repository")
+            print(self.session)
+            self.session.add(record)
+        except Exception as e:
+            print(e)
+            raise e
 
     def get(self, reference):
         return self.session.query(model.TvShow).filter_by(reference=reference).one()
-    
+
     def list(self, offset: int = None, limit: int = None, **query_conditions):
         query = self.session.query(model.TvShow).all()
-        
+
         for key, value in query_conditions.items():
             query = query.filter(getattr(model.TvShow, key) == value)
 
@@ -49,9 +55,9 @@ class RecordsRepository(AbstracRepository):
             query = query.limit(limit)
 
         return [entity.dict() for entity in query]
-    
 
     def bulk_insert(self, records: List[dict]):
+        print("bulk insert method is called in records repository")
         self.session.bulk_insert_mappings(records)
 
     def update(self, entity_id: int, entity):

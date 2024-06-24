@@ -1,5 +1,3 @@
-
-
 from dal.model import TvShow
 from sqlalchemy.orm import registry
 from sqlalchemy.schema import MetaData
@@ -27,6 +25,7 @@ tv_show_table = Table(
     Column("genre", String),
     Column("description", String),
 )
+
 
 def start_mappers():
     mapper_registry.map_imperatively(TvShow, tv_show_table)
