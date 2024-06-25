@@ -25,7 +25,7 @@ async def get_record(record_id: int):
 async def add_record(record: TvShowRecordSchema):
     try:
         record.id = uuid4()
-        record = services.save_record(record.dict(), uows.DatabaseUnitOfWork())
+        record = services.save_record(record, uows.SqlUnitOfWork())
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     return record
