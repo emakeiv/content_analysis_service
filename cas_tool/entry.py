@@ -1,5 +1,7 @@
-from src.etl.runner import ETL
-from src.sal.data.s3.data_service import S3DataService
+from etl.runner import ETL
+from sal.data.s3.services import S3DataService
+from sal.data.local.services import LocalStorageService
+from sal.db_ops import services, uows
 from configure import settings
 from uuid import uuid4, UUID
 
@@ -14,33 +16,26 @@ local_config = {
     "destination_path": "",
 }
 
-local_config = {
-    
-    "source_path": "data/raw/",
-    "destination_path": "",
-}
 
 def run():
-    """
-    runs the ETL extract, transformm load  process using an S3 data service as primary data source.
-    This function extracts data from an S3 bucket, using the configuration settings
-    provided in the `primary_config` dictionary. It then prints the head of the extracted data.
-    """
+    data_service = S3DataService(**s3_config)
+    storage_service = LocalStorageService(**local_config)
+    uow = uows.DatabaseUnitOfWork()
+    process = ETL(data_service, services, storage_service, uow)
 
-    data_service = S3DataService(**primary_config)
-    process = ETL(data_service)
     try:
-        data = process.extract("tv_sample.csv")
-    except Exception as e:
-        print(f"error occurred during data extract: {e}")
-    else:
-        print(f"data successfully extracted")
-        print(data.head())
-        print(data.columns)
-        print(data.info())
+        entities = process.extract("tv_sample.csv")
+        entities = process.transform(entities)
+        for i, entity in entities.iterrows():
 
-    # process.transform()
-    # process.load()
+            print(f"trying to add entity: {i}")
+            print(f"entity structure: {entity.to_dict()}")
+            services.save_record(entity.to_dict(), uow)
+            if i > 0:
+                break
+
+    except Exception as e:
+        print(f"error occurred: {e}")
 
 
 if __name__ == "__main__":
