@@ -16,5 +16,7 @@ INSERT INTO TV_SHOW_RECORDS VALUES (
 );
 
 PRAGMA table_info(TV_SHOW_RECORDS);
-
+SELECT * FROM TV_SHOW_RECORDS LIMIT 10;
 DELETE FROM TV_SHOW_RECORDS;
+SELECT COUNT(*) FROM tv_show_records WHERE year IS NULL or year = '';
+UPDATE tv_show_records SET year = 0 WHERE year IS NULL OR year = ''; 

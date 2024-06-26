@@ -39,7 +39,7 @@ def save_many_records(entities, uow: AbstractUnitOfWork):
                 return f"unexpected error: {str(e)}"
 
 
-def get_records(offset: int, limit: int ,uow: AbstractUnitOfWork):
+def get_records(uow: AbstractUnitOfWork):
     try:
         with uow:
             return uow.repos.list(offset=0, limit=10)
