@@ -10,7 +10,7 @@ router = APIRouter()
 @router.get("/records/", response_model=TVShowRecordsListSchema)
 async def get_records():
     try:
-        records = services.get_records(uows.DatabaseUnitOfWork())
+        records = services.get_records(0, 10, uows.DatabaseUnitOfWork())
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     return {"records": records}

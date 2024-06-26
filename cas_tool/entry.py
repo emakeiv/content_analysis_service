@@ -1,7 +1,8 @@
 from etl.runner import ETL
-from sal.data.s3.services import S3DataService
-from sal.data.local.services import LocalStorageService
+from sal.storage.s3.services import S3DataService
+from sal.storage.local.services import LocalStorageService
 from sal.db_ops import services, uows
+from dal.orm.mapper import start_mappers
 from configure import settings
 from uuid import uuid4, UUID
 
@@ -18,22 +19,19 @@ local_config = {
 
 
 def run():
+    start_mappers()
     data_service = S3DataService(**s3_config)
     storage_service = LocalStorageService(**local_config)
-    uow = uows.DatabaseUnitOfWork()
-    process = ETL(data_service, services, storage_service, uow)
+    process = ETL(data_service, services, storage_service, uows)
 
     try:
         entities = process.extract("tv_sample.csv")
         entities = process.transform(entities)
         for i, entity in entities.iterrows():
-
-            print(f"trying to add entity: {i}")
-            print(f"entity structure: {entity.to_dict()}")
-            services.save_record(entity.to_dict(), uow)
-            if i > 0:
-                break
-
+            print(f"processing {i} of {len(entities)}")
+            entity["id"] = uuid4()
+            entity = services.save_record(entity.to_dict(), uows.DatabaseUnitOfWork())
+            
     except Exception as e:
         print(f"error occurred: {e}")
 

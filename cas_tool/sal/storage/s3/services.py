@@ -6,6 +6,7 @@ from io import StringIO
 # TODO: uow patern impl
 # TODO: generic data service interface
 
+
 class S3DataService:
     def __init__(self, access_key, secret_key, bucket_name, region_name="eu-north-1"):
         self.client = boto3.client(

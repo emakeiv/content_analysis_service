@@ -1,5 +1,7 @@
+from cas_tool.etl.transformations import ops
+
 class ETL:
-    def __init__(self, data_service, storage_service, db_service, uow):
+    def __init__(self, data_service, db_service, storage_service, uow):
 
         self.data_service = data_service
         self.db_service = db_service
@@ -20,50 +22,14 @@ class ETL:
 
     def transform(self, obj):
         """
+        DONE:
+            - handle missing values.
         TODO:
             - apply some data imputation techniques
-            - handle missing values.
             - normalize categorical columns.
             - parse and clean the 'description' field.
             - fix column dtypes
         """
-
-        """
-        range index: 366933
-        default memory usage: 36.4+ MB
-        column_type: {
-            'asset_id: int64', 
-            'duration: float64', 
-            'name: object', 
-            'season: float64', 
-            'episode: float64', 
-            'description: object', 
-            'year: float64', 
-            'actors: object', 
-            'director: object', 
-            'country: object', 
-            'content_type: object', 
-            'imdbid: object',
-            'genre: object'
-        }
-        """
-
-        obj.fillna(
-            {
-                "duration": 0,
-                "name": "",
-                "season": 0,
-                "episode": 0,
-                "description": "",
-                "year:": 0,
-                "actors": "",
-                "director": "",
-                "country": "unknown",
-                "content_type": "unknown",
-                "imdbid": "unknown",
-                "genre": "unknown",
-            },
-            inplace=True,
-        )
-
+        obj = ops.fillna(obj)
+        obj = ops.types(obj)
         return obj

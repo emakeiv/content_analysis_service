@@ -3,11 +3,13 @@ from sal.db_ops.uows import AbstractUnitOfWork
 
 
 def save_record(entity, uow: AbstractUnitOfWork):
-
     try:
         with uow:
-            record = Record(**entity)
-            print(f"created record:{record}")
+            try:
+                record = Record(**entity)
+            except Exception as e:
+                print(e)
+                raise e
             uow.repos.add(record)
             uow.commit()
 
@@ -37,10 +39,10 @@ def save_many_records(entities, uow: AbstractUnitOfWork):
                 return f"unexpected error: {str(e)}"
 
 
-def get_records(uow: AbstractUnitOfWork):
+def get_records(offset: int, limit: int ,uow: AbstractUnitOfWork):
     try:
         with uow:
-            return uow.repos.list()
+            return uow.repos.list(offset=0, limit=10)
 
     except Exception as e:
         uow.rollback()
